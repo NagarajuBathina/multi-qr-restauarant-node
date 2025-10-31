@@ -3,9 +3,10 @@ import { Sequelize, DataTypes, Model, Optional } from "sequelize";
 interface RestaurantTablesAttributes {
   table_id: number;
   res_id: number;
+  loc_id: number;
   table_number: String;
   table_position: String;
-  qr_code: String;
+  // qr_code: String;
   capacity: number;
   table_type: String;
   status: String;
@@ -16,7 +17,7 @@ interface RestaurantTablesAttributes {
 }
 
 // Some fields are auto-generated (optional on creation)
-interface RestaurantTablesCreationAttributes extends Optional<RestaurantTablesAttributes, "res_id"> {}
+interface RestaurantTablesCreationAttributes extends Optional<RestaurantTablesAttributes, "table_id"> {}
 
 export class RestaurantTable
   extends Model<RestaurantTablesAttributes, RestaurantTablesCreationAttributes>
@@ -24,9 +25,10 @@ export class RestaurantTable
 {
   declare table_id: number;
   declare res_id: number;
+  declare loc_id: number;
   declare table_number: String;
   declare table_position: String;
-  declare qr_code: String;
+  // declare qr_code: String;
   declare capacity: number;
   declare table_type: String;
   declare status: String;
@@ -48,6 +50,10 @@ export default (sequelize: Sequelize): typeof RestaurantTable => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      loc_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       table_number: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -56,10 +62,10 @@ export default (sequelize: Sequelize): typeof RestaurantTable => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      qr_code: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // qr_code: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
       capacity: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -89,9 +95,6 @@ export default (sequelize: Sequelize): typeof RestaurantTable => {
 
       createdAt: "created_at",
       updatedAt: "updated_at",
-
-      // ✅ enable soft deletes (paranoid mode)
-      paranoid: true,
     }
   );
   return RestaurantTable;

@@ -16,7 +16,7 @@ interface RestaurantUsersAttributes {
 }
 
 // Some fields are auto-generated (optional on creation)
-interface RestaurantUsersCreationAttributes extends Optional<RestaurantUsersAttributes, "res_id"> {}
+interface RestaurantUsersCreationAttributes extends Optional<RestaurantUsersAttributes, "res_user_id"> {}
 
 export class RestaurantUsers
   extends Model<RestaurantUsersAttributes, RestaurantUsersCreationAttributes>

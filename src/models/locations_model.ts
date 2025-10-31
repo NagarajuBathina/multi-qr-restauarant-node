@@ -1,9 +1,10 @@
 import { Sequelize, DataTypes, Model, Optional } from "sequelize";
 
-interface RestaurantAttributes {
+interface LocationsAttributes {
+  loc_id: number;
   res_id: number;
-  res_name: String;
-  email: String;
+  tax_id: String;
+  tax: number;
   phone: String;
   line1: Text;
   line2: Text;
@@ -12,21 +13,23 @@ interface RestaurantAttributes {
   state: String;
   zip_code: number;
   is_active: boolean;
+  no_of_tables: number;
+  payment_gateway: String;
+  subscription_tier: String;
+  subscription_expires_at?: Date | null;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date | null;
 }
 
 // Some fields are auto-generated (optional on creation)
-interface RestaurantCreationAttributes extends Optional<RestaurantAttributes, "res_id"> {}
+interface LocationCreationAttributes extends Optional<LocationsAttributes, "loc_id"> {}
 
-export class Restaurant
-  extends Model<RestaurantAttributes, RestaurantCreationAttributes>
-  implements RestaurantAttributes
-{
+export class Location extends Model<LocationsAttributes, LocationCreationAttributes> implements LocationsAttributes {
+  declare loc_id: number;
   declare res_id: number;
-  declare res_name: String;
-  declare email: String;
+  declare tax_id: String;
+  declare tax: number;
   declare phone: String;
   declare line1: Text;
   declare line2: Text;
@@ -35,31 +38,40 @@ export class Restaurant
   declare state: String;
   declare zip_code: number;
   declare is_active: boolean;
+  declare no_of_tables: number;
+  declare payment_gateway: String;
+  declare subscription_tier: String;
+  declare subscription_expires_at?: Date | null;
   declare created_at?: Date;
   declare updated_at?: Date;
   declare deleted_at?: Date | null;
 }
 
-export default (sequelize: Sequelize): typeof Restaurant => {
-  Restaurant.init(
+export default (sequelize: Sequelize): typeof Location => {
+  Location.init(
     {
-      res_id: {
+      loc_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      res_name: {
+      res_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      tax_id: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      tax: {
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
       phone: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+
       line1: {
         type: DataTypes.TEXT("long"),
         allowNull: false,
@@ -88,11 +100,27 @@ export default (sequelize: Sequelize): typeof Restaurant => {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },
+      no_of_tables: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      payment_gateway: {
+        type: DataTypes.ENUM("quickpay", "upi", "visa", "applepay"),
+        defaultValue: "upi",
+      },
+      subscription_tier: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      subscription_expires_at: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
     },
     {
       sequelize,
       timestamps: true,
-      tableName: "restaurant",
+      tableName: "locations",
       engine: "InnoDB",
 
       createdAt: "created_at",
@@ -103,5 +131,5 @@ export default (sequelize: Sequelize): typeof Restaurant => {
       paranoid: true,
     }
   );
-  return Restaurant;
+  return Location;
 };

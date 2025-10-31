@@ -1,6 +1,16 @@
 import { Sequelize } from "sequelize";
 
-// import AppModel from "../models/app_model";
+import RestauarantModel from "../models/restaurant_model";
+import RestaurantTableModel from "../models/res_tables_model";
+import RestauarantUsersModel from "../models/res_users_model";
+import TableCartModel from "../models/table_cart_model";
+import CartItemsModel from "../models/cart_items_model";
+import LocationModel from "../models/locations_model";
+import MenuCategoryModel from "../models/menu_categories_table";
+import MenuItemsModel from "../models/menu_items_model";
+import ItemVariantsModel from "../models/item_variants_model";
+import OrdersModel from "../models/orders_model";
+import PaymentsModel from "../models/payments_model";
 
 // associations
 // import setupAssociations from "../associations";
@@ -18,11 +28,30 @@ const sequelize = new Sequelize("u276789778_qr_multi_rest", "u276789778_qr_multi
   },
 });
 
-// const App = AppModel(sequelize);
-
+const Restauarant = RestauarantModel(sequelize);
+const RestaurantTable = RestaurantTableModel(sequelize);
+const RestaurantUsers = RestauarantUsersModel(sequelize);
+const TableCart = TableCartModel(sequelize);
+const CartItems = CartItemsModel(sequelize);
+const Location = LocationModel(sequelize);
+const MenuCategory = MenuCategoryModel(sequelize);
+const MenuItems = MenuItemsModel(sequelize);
+const ItemVariants = ItemVariantsModel(sequelize);
+const Orders = OrdersModel(sequelize);
+const Payments = PaymentsModel(sequelize);
 
 const Models = {
-
+  Restauarant,
+  RestaurantTable,
+  RestaurantUsers,
+  TableCart,
+  CartItems,
+  Location,
+  MenuCategory,
+  MenuItems,
+  ItemVariants,
+  Orders,
+  Payments,
 };
 
 // setupAssociations(Models);
