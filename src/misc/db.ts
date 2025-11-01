@@ -13,7 +13,7 @@ import OrdersModel from "../models/orders_model";
 import PaymentsModel from "../models/payments_model";
 
 // associations
-// import setupAssociations from "../associations";
+import setupAssociations from "../associations";
 
 const sequelize = new Sequelize("u276789778_qr_multi_rest", "u276789778_qr_multi_rest", "123@Apple@123", {
   dialect: "mysql",
@@ -54,7 +54,7 @@ const Models = {
   Payments,
 };
 
-// setupAssociations(Models);
+setupAssociations(Models);
 
 let isConnected = false;
 

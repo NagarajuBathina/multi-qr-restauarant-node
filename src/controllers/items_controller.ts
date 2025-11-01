@@ -18,19 +18,26 @@ export const createItem = async (req: Request, res: Response) => {
 };
 
 export const fetchItems = async (req: Request, res: Response) => {
-  const { MenuItems } = await connectDB();
+  const { MenuItems, MenuCategory } = await connectDB();
   const limit = parseInt((req.query.limit as string) || "10", 10);
   const page = parseInt((req.query.page as string) || "1", 10);
+
+  // console.log(req.params.cate_id);
+  console.log(req.params.loc_id);
 
   try {
     const offset = (page - 1) * limit;
 
     const items = await MenuItems.findAndCountAll({
-      where: { cate_id: Number(req.params.cate_id) },
+      where: { loc_id: Number(req.params.loc_id) },
       limit: page === 0 ? undefined : limit,
       offset: page === 0 ? undefined : offset,
       raw: true,
       nest: true,
+      include: {
+        model: MenuCategory,
+        attributes: ["name"],
+      },
     });
 
     if (!items || items.count === 0) {
@@ -50,8 +57,10 @@ export const fetchItems = async (req: Request, res: Response) => {
       totalPages: Math.ceil(items.count / limit),
       totalProducts: items.count,
       data: items.rows,
+      loc_id: req.params.loc_id,
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).json({ message: "internal server error" });
   }
 };

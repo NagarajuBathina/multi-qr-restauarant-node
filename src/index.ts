@@ -29,7 +29,7 @@ app.get("/", async (req: Request, res: Response) => {
   try {
     await connectDB();
     console.log("Connection successful.");
-    return res.status(200).json({ message: "connection successful." });
+    return res.status(200).json({ message: "API working fine!" });
   } catch (e) {
     return res.status(500).send("couldnt connect to database");
   }
