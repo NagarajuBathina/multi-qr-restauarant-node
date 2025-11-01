@@ -23,7 +23,7 @@ export const fetchItems = async (req: Request, res: Response) => {
   const page = parseInt((req.query.page as string) || "1", 10);
 
   // console.log(req.params.cate_id);
-  console.log(req.params.loc_id);
+  // console.log(req.params.loc_id);
 
   try {
     const offset = (page - 1) * limit;
