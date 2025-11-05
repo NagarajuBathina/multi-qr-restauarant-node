@@ -3,7 +3,7 @@ import { Sequelize, DataTypes, Model, Optional } from "sequelize";
 interface MenuCategoriesAttributes {
   cate_id: number;
   loc_id: number;
-  name: String;
+  name: string;
   description: Text;
   image_url: Text;
   display_order: number;
@@ -21,7 +21,7 @@ export class MenuCategory
 {
   declare cate_id: number;
   declare loc_id: number;
-  declare name: String;
+  declare name: string;
   declare description: Text;
   declare image_url: Text;
   declare display_order: number;

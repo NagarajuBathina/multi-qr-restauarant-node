@@ -5,8 +5,8 @@ interface OrdersAttributes {
   res_id: number;
   loc_id: number;
   table_id: number;
-  order_type: String;
-  priority: String;
+  order_type: string;
+  priority: string;
   subtotal: number;
   discount_amount: number;
   tax_rate: number;
@@ -14,10 +14,11 @@ interface OrdersAttributes {
   gratuity: number;
   total_amount: number;
   estimated_preparation_time: number;
-  cart_id: number; // restauarant cart id
-  is_active: boolean;
+  // cart_id: number; // restauarant cart id
+  // is_active: boolean;
   special_instructions: Text;
   internal_notes: Text;
+  status: string;
   cancellation_reason: Text;
   cancellation_date_time?: Date;
   created_at?: Date;
@@ -32,16 +33,17 @@ export class Orders extends Model<OrdersAttributes, OrdersCreationAttributes> im
   declare res_id: number;
   declare loc_id: number;
   declare table_id: number;
-  declare order_type: String;
-  declare priority: String;
+  declare order_type: string;
+  declare priority: string;
   declare subtotal: number;
   declare discount_amount: number;
   declare tax_amount: number;
   declare tax_rate: number;
   declare total_amount: number;
   declare estimated_preparation_time: number;
-  declare cart_id: number;
-  declare is_active: boolean;
+  // declare cart_id: number;
+  // declare is_active: boolean;
+  declare status: string;
   declare gratuity: number;
   declare internal_notes: Text;
   declare cancellation_date_time?: Date;
@@ -79,6 +81,10 @@ export default (sequelize: Sequelize): typeof Orders => {
         type: DataTypes.ENUM("normal", "high", "urgent"),
         defaultValue: "normal",
       },
+      status: {
+        type: DataTypes.ENUM("Pending", "Preparing", "Compeleted", "Cancelled"),
+        defaultValue: "Pending",
+      },
       subtotal: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
@@ -113,14 +119,14 @@ export default (sequelize: Sequelize): typeof Orders => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      cart_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      is_active: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
+      // cart_id: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      // },
+      // is_active: {
+      //   type: DataTypes.BOOLEAN,
+      //   defaultValue: false,
+      // },
       special_instructions: {
         type: DataTypes.TEXT("long"),
         allowNull: false,
@@ -131,11 +137,11 @@ export default (sequelize: Sequelize): typeof Orders => {
       },
       cancellation_date_time: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       cancellation_reason: {
         type: DataTypes.TEXT("long"),
-        allowNull: false,
+        allowNull: true,
       },
     },
     {
@@ -147,7 +153,7 @@ export default (sequelize: Sequelize): typeof Orders => {
       createdAt: "created_at",
       updatedAt: "updated_at",
 
-      paranoid: true,
+      paranoid: false,
     }
   );
   return Orders;

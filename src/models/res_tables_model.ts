@@ -4,12 +4,12 @@ interface RestaurantTablesAttributes {
   table_id: number;
   res_id: number;
   loc_id: number;
-  table_number: String;
-  table_position: String;
-  // qr_code: String;
+  table_number: string;
+  table_position: string;
+  // qr_code: string;
   capacity: number;
-  table_type: String;
-  status: String;
+  table_type: string;
+  status: string;
   is_active: boolean;
   last_cleaned_at?: Date;
   created_at?: Date;
@@ -26,12 +26,12 @@ export class RestaurantTable
   declare table_id: number;
   declare res_id: number;
   declare loc_id: number;
-  declare table_number: String;
-  declare table_position: String;
-  // declare qr_code: String;
+  declare table_number: string;
+  declare table_position: string;
+  // declare qr_code: string;
   declare capacity: number;
-  declare table_type: String;
-  declare status: String;
+  declare table_type: string;
+  declare status: string;
   declare is_active: boolean;
   declare last_cleaned_at?: Date;
   declare created_at?: Date;
@@ -63,7 +63,7 @@ export default (sequelize: Sequelize): typeof RestaurantTable => {
         allowNull: false,
       },
       // qr_code: {
-      //   type: DataTypes.STRING,
+      //   type: DataTypes.string,
       //   allowNull: false,
       // },
       capacity: {

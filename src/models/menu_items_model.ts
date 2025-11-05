@@ -5,16 +5,16 @@ interface MenuItemsAttributes {
   cate_id: number;
   // res_id: number;
   loc_id: number;
-  sku: String; //stock keeping unit
-  name: String;
+  sku: string; //stock keeping unit
+  name: string;
   description: Text;
-  short_description: String;
+  short_description: string;
   image_url: Text;
   price: number;
   discount_amount: number;
-  item_type: String;
+  item_type: string;
   preparation_time: number;
-  tags: String;
+  tags: string;
   is_available: boolean;
   availability_from: number;
   availability_to: number;
@@ -32,16 +32,16 @@ export class MenuItems extends Model<MenuItemsAttributes, MenuItemsCreationAttri
   declare cate_id: number;
   declare loc_id: number;
   // declare res_id: number;
-  declare sku: String;
-  declare name: String;
+  declare sku: string;
+  declare name: string;
   declare description: Text;
-  declare short_description: String;
+  declare short_description: string;
   declare image_url: Text;
   declare price: number;
   declare discount_amount: number;
-  declare item_type: String;
+  declare item_type: string;
   declare preparation_time: number;
-  declare tags: String;
+  declare tags: string;
   declare is_available: boolean;
   declare availability_from: number;
   declare availability_to: number;

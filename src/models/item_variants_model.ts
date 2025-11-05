@@ -3,8 +3,8 @@ import { Sequelize, DataTypes, Model, Optional } from "sequelize";
 interface ItemVariantsAttributes {
   variant_id: number;
   item_id: number;
-  name: String;
-  item_type: String;
+  name: string;
+  item_type: string;
   price: number;
 }
 
@@ -17,8 +17,8 @@ export class ItemVariants
 {
   declare variant_id: number;
   declare item_id: number;
-  declare name: String;
-  declare item_type: String;
+  declare name: string;
+  declare item_type: string;
   declare price: number;
 }
 

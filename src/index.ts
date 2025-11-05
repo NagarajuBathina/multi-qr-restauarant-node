@@ -7,6 +7,9 @@ import LocationRoute from "./routes/location_route";
 import TabelRoute from "./routes/res_table_route";
 import CategoryRoute from "./routes/category_route";
 import ItemRoute from "./routes/item_route";
+import OrderRoute from "./routes/order_route";
+import UserRoute from "./routes/user_route";
+import AuthRoute from "./routes/auth_route";
 
 const app = express();
 const PORT = 1537;
@@ -24,6 +27,9 @@ app.use(LocationRoute);
 app.use(TabelRoute);
 app.use(CategoryRoute);
 app.use(ItemRoute);
+app.use(OrderRoute);
+app.use(UserRoute);
+app.use(AuthRoute);
 
 app.get("/", async (req: Request, res: Response) => {
   try {

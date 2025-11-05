@@ -3,12 +3,13 @@ import { Sequelize, DataTypes, Model, Optional } from "sequelize";
 interface RestaurantUsersAttributes {
   res_user_id: number;
   res_id: number;
-  email: String;
-  phone: String;
-  password: Text;
-  first_name: String;
-  last_name: String;
-  role: String;
+  loc_id: number;
+  email: string;
+  phone: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  role: string;
   is_active: boolean;
   created_at?: Date;
   updated_at?: Date;
@@ -24,12 +25,13 @@ export class RestaurantUsers
 {
   declare res_user_id: number;
   declare res_id: number;
-  declare email: String;
-  declare phone: String;
-  declare password: Text;
-  declare first_name: String;
-  declare last_name: String;
-  declare role: String;
+  declare loc_id: number;
+  declare email: string;
+  declare phone: string;
+  declare password: string;
+  declare first_name: string;
+  declare last_name: string;
+  declare role: string;
   declare is_active: boolean;
   declare created_at?: Date;
   declare updated_at?: Date;
@@ -48,6 +50,10 @@ export default (sequelize: Sequelize): typeof RestaurantUsers => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      loc_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -58,7 +64,7 @@ export default (sequelize: Sequelize): typeof RestaurantUsers => {
         allowNull: false,
       },
       password: {
-        type: DataTypes.TEXT("long"),
+        type: DataTypes.STRING,
         allowNull: false,
       },
 

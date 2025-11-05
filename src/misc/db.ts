@@ -10,6 +10,7 @@ import MenuCategoryModel from "../models/menu_categories_table";
 import MenuItemsModel from "../models/menu_items_model";
 import ItemVariantsModel from "../models/item_variants_model";
 import OrdersModel from "../models/orders_model";
+import OrderItmesModel from "../models/order_items_model";
 import PaymentsModel from "../models/payments_model";
 
 // associations
@@ -38,6 +39,7 @@ const MenuCategory = MenuCategoryModel(sequelize);
 const MenuItems = MenuItemsModel(sequelize);
 const ItemVariants = ItemVariantsModel(sequelize);
 const Orders = OrdersModel(sequelize);
+const OrderItems = OrderItmesModel(sequelize);
 const Payments = PaymentsModel(sequelize);
 
 const Models = {
@@ -51,6 +53,7 @@ const Models = {
   MenuItems,
   ItemVariants,
   Orders,
+  OrderItems,
   Payments,
 };
 
