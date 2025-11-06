@@ -1,5 +1,5 @@
 import express from "express";
-import { createCategory, fetchCategories } from "../controllers/category_controller";
+import { createCategory, fetchCategories } from "../controllers/category.controller";
 const router = express.Router();
 
 router.post("/create-category", createCategory);

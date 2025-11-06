@@ -1,23 +1,21 @@
 import connectDB from "../misc/db";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import { AppError } from "../apperror";
 
-export const createItem = async (req: Request, res: Response) => {
+export const createItem = async (req: Request, res: Response, next: NextFunction) => {
   const { MenuItems } = await connectDB();
   const { cate_id, loc_id, name } = req.body;
   try {
     const checkItem = await MenuItems.findOne({ where: { cate_id, loc_id, name: name } });
-    if (checkItem) {
-      return res.status(400).json({ message: "Item already existed for this category" });
-    }
+    if (checkItem) throw new AppError("Item already existed for this category", 400);
     await MenuItems.create(req.body);
     return res.status(201).json({ message: "Item created successfylly", success: true });
   } catch (e) {
-    console.error(e);
-    return res.status(500).json({ message: "internal server error" });
+    next(e);
   }
 };
 
-export const fetchItems = async (req: Request, res: Response) => {
+export const fetchItems = async (req: Request, res: Response, next: NextFunction) => {
   const { MenuItems, MenuCategory } = await connectDB();
   const limit = parseInt((req.query.limit as string) || "10", 10);
   const page = parseInt((req.query.page as string) || "1", 10);
@@ -57,7 +55,6 @@ export const fetchItems = async (req: Request, res: Response) => {
       loc_id: req.params.loc_id,
     });
   } catch (e) {
-    console.error(e);
-    return res.status(500).json({ message: "internal server error" });
+    next(e);
   }
 };

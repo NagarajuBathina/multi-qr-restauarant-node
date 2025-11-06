@@ -1,5 +1,5 @@
 import express from "express";
-import { createLocation } from "../controllers/location_controller";
+import { createLocation } from "../controllers/location.controller";
 const router = express.Router();
 
 router.post("/create-location", createLocation);

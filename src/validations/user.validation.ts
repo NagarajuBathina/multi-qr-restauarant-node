@@ -12,3 +12,9 @@ export const createUserSchema = z.object({
     role: z.enum(["restaurant_admin", "manager", "staff", "kitchen_chef"]).optional(),
   }),
 });
+
+export const changePasswordSchema = z.object({
+  body: z.object({
+    password: z.string().min(6, "Password must be at least 6 characters"),
+  }),
+});

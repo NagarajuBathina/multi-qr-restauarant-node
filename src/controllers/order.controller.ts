@@ -1,9 +1,11 @@
 import connectDB from "../misc/db";
-import { Request, Response } from "express";
-import { Op } from "sequelize";
-import { MenuItems } from "../models/menu_items_model";
+import { Request, Response, NextFunction } from "express";
+import { AppError } from "../apperror";
 
-export const createOrder = async (req: Request, res: Response) => {
+import { Op } from "sequelize";
+import { MenuItems } from "../models/menu.items.model";
+
+export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   const { Orders, OrderItems, sequelize } = await connectDB();
   const transaction = await sequelize.transaction();
   const { items, ...orderData } = req.body;
@@ -31,11 +33,11 @@ export const createOrder = async (req: Request, res: Response) => {
     if (transaction) {
       await transaction.rollback();
     }
-    return res.status(500).json({ message: "Internal server error" });
+    next(e);
   }
 };
 
-export const fetchTodayOrders = async (req: Request, res: Response) => {
+export const fetchTodayOrders = async (req: Request, res: Response, next: NextFunction) => {
   const { Orders, OrderItems } = await connectDB();
   const { loc_id, status, table_id } = req.body;
   const limit = parseInt((req.query.limit as string) || "10", 10);
@@ -86,7 +88,6 @@ export const fetchTodayOrders = async (req: Request, res: Response) => {
       totalPages: Math.ceil(orders.count / limit),
     });
   } catch (e) {
-    console.error(e);
-    return res.status(500).json({ message: "internal server error" });
+    next(e);
   }
 };

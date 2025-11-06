@@ -1,15 +1,17 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import connectDB from "./misc/db";
+import { globalErrorHandler } from "./middleware/global.error";
 
-import RestaurantRoute from "./routes/restaurant_route";
-import LocationRoute from "./routes/location_route";
-import TabelRoute from "./routes/res_table_route";
-import CategoryRoute from "./routes/category_route";
-import ItemRoute from "./routes/item_route";
-import OrderRoute from "./routes/order_route";
-import UserRoute from "./routes/user_route";
-import AuthRoute from "./routes/auth_route";
+import SubscriptionRoute from "./routes/subscription.route";
+import RestaurantRoute from "./routes/restaurant.route";
+import LocationRoute from "./routes/location.route";
+import TabelRoute from "./routes/res.table.route";
+import CategoryRoute from "./routes/category.route";
+import ItemRoute from "./routes/item.route";
+import OrderRoute from "./routes/order.route";
+import UserRoute from "./routes/user.route";
+import AuthRoute from "./routes/auth.route";
 
 const app = express();
 const PORT = 1537;
@@ -22,6 +24,7 @@ app.use(
   })
 );
 
+app.use(SubscriptionRoute);
 app.use(RestaurantRoute);
 app.use(LocationRoute);
 app.use(TabelRoute);
@@ -30,6 +33,9 @@ app.use(ItemRoute);
 app.use(OrderRoute);
 app.use(UserRoute);
 app.use(AuthRoute);
+
+// must be at the very end!
+app.use(globalErrorHandler);
 
 app.get("/", async (req: Request, res: Response) => {
   try {

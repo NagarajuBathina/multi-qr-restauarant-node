@@ -1,17 +1,18 @@
 import { Sequelize } from "sequelize";
 
-import RestauarantModel from "../models/restaurant_model";
-import RestaurantTableModel from "../models/res_tables_model";
-import RestauarantUsersModel from "../models/res_users_model";
-import TableCartModel from "../models/table_cart_model";
-import CartItemsModel from "../models/cart_items_model";
-import LocationModel from "../models/locations_model";
-import MenuCategoryModel from "../models/menu_categories_table";
-import MenuItemsModel from "../models/menu_items_model";
-import ItemVariantsModel from "../models/item_variants_model";
-import OrdersModel from "../models/orders_model";
-import OrderItmesModel from "../models/order_items_model";
-import PaymentsModel from "../models/payments_model";
+import SubscriptionPlansModel from "../models/subscription.plans.model";
+import RestauarantModel from "../models/restaurant.model";
+import RestaurantTableModel from "../models/res.tables.model";
+import RestauarantUsersModel from "../models/res.users.model";
+import TableCartModel from "../models/table.cart.model";
+import CartItemsModel from "../models/cart.items.model";
+import LocationModel from "../models/locations.model";
+import MenuCategoryModel from "../models/menu.categories.table";
+import MenuItemsModel from "../models/menu.items.model";
+import ItemVariantsModel from "../models/item.variants.model";
+import OrdersModel from "../models/orders.model";
+import OrderItmesModel from "../models/order.items.model";
+import PaymentsModel from "../models/payments.model";
 
 // associations
 import setupAssociations from "../associations";
@@ -29,6 +30,7 @@ const sequelize = new Sequelize("u276789778_qr_multi_rest", "u276789778_qr_multi
   },
 });
 
+const SubscriptionPlans = SubscriptionPlansModel(sequelize);
 const Restauarant = RestauarantModel(sequelize);
 const RestaurantTable = RestaurantTableModel(sequelize);
 const RestaurantUsers = RestauarantUsersModel(sequelize);
@@ -43,6 +45,7 @@ const OrderItems = OrderItmesModel(sequelize);
 const Payments = PaymentsModel(sequelize);
 
 const Models = {
+  SubscriptionPlans,
   Restauarant,
   RestaurantTable,
   RestaurantUsers,

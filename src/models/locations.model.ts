@@ -15,7 +15,7 @@ interface LocationsAttributes {
   is_active: boolean;
   no_of_tables: number;
   payment_gateway: string;
-  subscription_tier: string;
+  subscription_tier: number; // plan_id
   subscription_expires_at?: Date | null;
   created_at?: Date;
   updated_at?: Date;
@@ -40,7 +40,7 @@ export class Location extends Model<LocationsAttributes, LocationCreationAttribu
   declare is_active: boolean;
   declare no_of_tables: number;
   declare payment_gateway: string;
-  declare subscription_tier: string;
+  declare subscription_tier: number;
   declare subscription_expires_at?: Date | null;
   declare created_at?: Date;
   declare updated_at?: Date;
@@ -109,7 +109,7 @@ export default (sequelize: Sequelize): typeof Location => {
         defaultValue: "upi",
       },
       subscription_tier: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       subscription_expires_at: {

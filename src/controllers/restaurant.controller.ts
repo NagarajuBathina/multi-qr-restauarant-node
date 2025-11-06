@@ -1,12 +1,22 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import connectDB from "../misc/db";
+import dayjs from "dayjs";
+import { AppError } from "../apperror";
 
-export const createRestaurant = async (req: Request, res: Response) => {
-  const { Restauarant, Location, sequelize } = await connectDB();
+export const createRestaurant = async (req: Request, res: Response, next: NextFunction) => {
+  const { Restauarant, Location, SubscriptionPlans, sequelize } = await connectDB();
   const transaction = await sequelize.transaction();
 
   try {
     const { restaurantData, locationData, commonData } = req.body;
+
+    const subscriptionData = await SubscriptionPlans.findOne({ where: locationData.subscription_tier });
+
+    if (!subscriptionData) throw new AppError("Plan not found", 404);
+
+    const planDuration = subscriptionData.duration;
+
+    const expiryDate = dayjs().add(planDuration, "day").format("YYYY-MM-DD HH:mm:ss");
 
     const restaurantPayload = {
       ...restaurantData,
@@ -19,6 +29,7 @@ export const createRestaurant = async (req: Request, res: Response) => {
       ...locationData,
       ...commonData,
       res_id: newRestaurant.res_id,
+      subscription_expires_at: expiryDate,
     };
 
     await Location.create(locationPayload, { transaction });
@@ -29,13 +40,12 @@ export const createRestaurant = async (req: Request, res: Response) => {
     if (transaction) {
       await transaction.rollback();
     }
-    console.error(e);
-    return res.status(500).json({ message: "internal server error" });
+    next(e);
   }
 };
 
 // fetch all restaurant(locations) for super admin
-export const fetchRestaurants = async (req: Request, res: Response) => {
+export const fetchRestaurants = async (req: Request, res: Response, next: NextFunction) => {
   const { Location } = await connectDB();
   const page = parseInt((req.query.page as string) || "1", 10);
   const limit = parseInt((req.query.limit as string) || "10", 10);
@@ -56,6 +66,6 @@ export const fetchRestaurants = async (req: Request, res: Response) => {
       totalPages: Math.ceil(result.count / limit),
     });
   } catch (e) {
-    return res.status(500).json({ message: "Internal server error" });
+    next(e);
   }
 };
