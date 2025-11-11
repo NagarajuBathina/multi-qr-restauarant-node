@@ -24,3 +24,50 @@ export const createRestaurantTable = async (req: Request, res: Response, next: N
     next(e);
   }
 };
+
+export const fetchQrStats = async (req: Request, res: Response, next: NextFunction) => {
+  const { CartItems, MenuItems, RestaurantTable, MenuCategory } = await connectDB();
+  const { table_id } = req.params;
+  try {
+    const table = await RestaurantTable.findOne({
+      where: { table_id, is_active: true },
+      attributes: ["table_number", "loc_id", "table_id"],
+    });
+    if (!table) {
+      throw new AppError("Invalid table id", 400);
+    }
+
+    const tableLocaiton = table.loc_id;
+
+    const [items, cartItems] = await Promise.all([
+      MenuItems.findAll({
+        where: { loc_id: tableLocaiton },
+        include: {
+          model: MenuCategory,
+          attributes: ["name"],
+        },
+        attributes: {
+          exclude: [
+            "cate_id",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "availability_from",
+            "availability_to",
+            "tags",
+            "sku",
+          ],
+        },
+      }),
+      CartItems.findAll({
+        where: { loc_id: tableLocaiton, table_id: table_id },
+        attributes: { exclude: ["created_at", "updated_at"] },
+      }),
+    ]);
+
+    return res.status(200).json({ success: true, data: { items, cartItems, table } });
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+};

@@ -12,6 +12,7 @@ import ItemRoute from "./routes/item.route";
 import OrderRoute from "./routes/order.route";
 import UserRoute from "./routes/user.route";
 import AuthRoute from "./routes/auth.route";
+import CartRoute from "./routes/cart.route";
 
 const app = express();
 const PORT = 1537;
@@ -33,6 +34,7 @@ app.use(ItemRoute);
 app.use(OrderRoute);
 app.use(UserRoute);
 app.use(AuthRoute);
+app.use(CartRoute);
 
 // must be at the very end!
 app.use(globalErrorHandler);

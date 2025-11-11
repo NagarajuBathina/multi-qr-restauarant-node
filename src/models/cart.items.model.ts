@@ -2,11 +2,13 @@ import { Sequelize, DataTypes, Model, Optional } from "sequelize";
 
 interface CartItemsAttributes {
   id: number;
-  cart_id: number;
+  // cart_id: number;
+  loc_id: number;
+  table_id: number;
   item_id: number;
   variant_id: number;
   quantity: number;
-  unit_price: number;
+  unit_price: number; // single item price
   total_price: number;
   special_instructions: Text;
   created_at?: Date;
@@ -18,7 +20,9 @@ interface CartItemsCreationAttributes extends Optional<CartItemsAttributes, "id"
 
 export class CartItems extends Model<CartItemsAttributes, CartItemsCreationAttributes> implements CartItemsAttributes {
   declare id: number;
-  declare cart_id: number;
+  // declare cart_id: number;
+  declare loc_id: number;
+  declare table_id: number;
   declare item_id: number;
   declare variant_id: number;
   declare quantity: number;
@@ -37,7 +41,15 @@ export default (sequelize: Sequelize): typeof CartItems => {
         autoIncrement: true,
         primaryKey: true,
       },
-      cart_id: {
+      // cart_id: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      // },
+      loc_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      table_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -65,7 +77,7 @@ export default (sequelize: Sequelize): typeof CartItems => {
       },
       special_instructions: {
         type: DataTypes.TEXT("long"),
-        allowNull: false,
+        allowNull: true,
       },
     },
     {
@@ -77,7 +89,7 @@ export default (sequelize: Sequelize): typeof CartItems => {
       createdAt: "created_at",
       updatedAt: "updated_at",
 
-      paranoid: true,
+      paranoid: false,
     }
   );
   return CartItems;
