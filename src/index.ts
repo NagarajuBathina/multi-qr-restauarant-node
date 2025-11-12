@@ -1,18 +1,18 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import connectDB from "./misc/db";
-import { globalErrorHandler } from "./middleware/global.error";
+import { globalErrorHandler } from "./middleware/global-error";
 
-import SubscriptionRoute from "./routes/subscription.route";
-import RestaurantRoute from "./routes/restaurant.route";
-import LocationRoute from "./routes/location.route";
-import TabelRoute from "./routes/res.table.route";
-import CategoryRoute from "./routes/category.route";
-import ItemRoute from "./routes/item.route";
-import OrderRoute from "./routes/order.route";
-import UserRoute from "./routes/user.route";
-import AuthRoute from "./routes/auth.route";
-import CartRoute from "./routes/cart.route";
+import SubscriptionRoute from "./routes/subscription-route";
+import RestaurantRoute from "./routes/restaurant-route";
+import LocationRoute from "./routes/location-route";
+import TabelRoute from "./routes/res-table-route";
+import CategoryRoute from "./routes/category-route";
+import ItemRoute from "./routes/item-route";
+import OrderRoute from "./routes/order-route";
+import UserRoute from "./routes/user-route";
+import AuthRoute from "./routes/auth-route";
+import CartRoute from "./routes/cart-route";
 
 const app = express();
 const PORT = 1537;

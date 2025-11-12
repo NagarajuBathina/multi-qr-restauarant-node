@@ -16,9 +16,11 @@ interface OrdersAttributes {
   estimated_preparation_time: number;
   // cart_id: number; // restauarant cart id
   // is_active: boolean;
-  special_instructions: Text;
+  // special_instructions: Text;
   internal_notes: Text;
   status: string;
+  cust_name: string; // customer name
+  cust_phone: string; //customer phone number
   cancellation_reason: Text;
   cancellation_date_time?: Date;
   created_at?: Date;
@@ -46,9 +48,11 @@ export class Orders extends Model<OrdersAttributes, OrdersCreationAttributes> im
   declare status: string;
   declare gratuity: number;
   declare internal_notes: Text;
+  declare cust_name: string;
+  declare cust_phone: string;
   declare cancellation_date_time?: Date;
   declare cancellation_reason: Text;
-  declare special_instructions: Text;
+  // declare special_instructions: Text;
   declare created_at?: Date;
   declare updated_at?: Date;
 }
@@ -82,7 +86,7 @@ export default (sequelize: Sequelize): typeof Orders => {
         defaultValue: "normal",
       },
       status: {
-        type: DataTypes.ENUM("Pending", "Preparing", "Compeleted", "Cancelled"),
+        type: DataTypes.ENUM("Pending", "Preparing", "Completed", "Cancelled"),
         defaultValue: "Pending",
       },
       subtotal: {
@@ -119,6 +123,14 @@ export default (sequelize: Sequelize): typeof Orders => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      cust_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      cust_phone: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       // cart_id: {
       //   type: DataTypes.INTEGER,
       //   allowNull: false,
@@ -127,13 +139,13 @@ export default (sequelize: Sequelize): typeof Orders => {
       //   type: DataTypes.BOOLEAN,
       //   defaultValue: false,
       // },
-      special_instructions: {
-        type: DataTypes.TEXT("long"),
-        allowNull: false,
-      },
+      // special_instructions: {
+      //   type: DataTypes.TEXT("long"),
+      //   allowNull: false,
+      // },
       internal_notes: {
         type: DataTypes.TEXT("long"),
-        allowNull: false,
+        allowNull: true,
       },
       cancellation_date_time: {
         type: DataTypes.DATE,

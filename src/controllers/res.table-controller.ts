@@ -31,7 +31,7 @@ export const fetchQrStats = async (req: Request, res: Response, next: NextFuncti
   try {
     const table = await RestaurantTable.findOne({
       where: { table_id, is_active: true },
-      attributes: ["table_number", "loc_id", "table_id"],
+      attributes: ["table_number", "loc_id", "table_id", "res_id"],
     });
     if (!table) {
       throw new AppError("Invalid table id", 400);

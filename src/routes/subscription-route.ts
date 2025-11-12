@@ -1,5 +1,5 @@
 import express from "express";
-import { createSubscriptionPlan, fetchSubscriptions } from "../controllers/subscription.controller";
+import { createSubscriptionPlan, fetchSubscriptions } from "../controllers/subscription-controller";
 const router = express.Router();
 
 router.post("/create-sub-plan", createSubscriptionPlan);

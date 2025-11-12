@@ -1,18 +1,18 @@
 import { Sequelize } from "sequelize";
 
-import SubscriptionPlansModel from "../models/subscription.plans.model";
-import RestauarantModel from "../models/restaurant.model";
-import RestaurantTableModel from "../models/res.tables.model";
-import RestauarantUsersModel from "../models/res.users.model";
-import TableCartModel from "../models/table.cart.model";
-import CartItemsModel from "../models/cart.items.model";
-import LocationModel from "../models/locations.model";
-import MenuCategoryModel from "../models/menu.categories.table";
-import MenuItemsModel from "../models/menu.items.model";
-import ItemVariantsModel from "../models/item.variants.model";
-import OrdersModel from "../models/orders.model";
-import OrderItmesModel from "../models/order.items.model";
-import PaymentsModel from "../models/payments.model";
+import SubscriptionPlansModel from "../models/subscription-plans-model";
+import RestauarantModel from "../models/restaurant-model";
+import RestaurantTableModel from "../models/res.tables-model";
+import RestauarantUsersModel from "../models/res-users-model";
+import TableCartModel from "../models/table-cart-model";
+import CartItemsModel from "../models/cart-items-model";
+import LocationModel from "../models/locations-model";
+import MenuCategoryModel from "../models/categories-model";
+import MenuItemsModel from "../models/menu-items-model";
+import ItemVariantsModel from "../models/item-variants-model";
+import OrdersModel from "../models/orders-model";
+import OrderItmesModel from "../models/order-items-model";
+import PaymentsModel from "../models/payments-model";
 
 // associations
 import setupAssociations from "../associations";

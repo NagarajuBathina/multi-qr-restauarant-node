@@ -5,9 +5,12 @@ interface OrderItemsAttributes {
   loc_id: number;
   table_id: number;
   item_id: number;
+  variant_id: number;
   quantity: number;
-  price: number;
+  total_price: number;
+  unit_price: number;
   order_id: number;
+  special_instructions: string;
 }
 
 // Some fields are auto-generated (optional on creation)
@@ -22,8 +25,11 @@ export class OrderItems
   declare item_id: number;
   declare table_id: number;
   declare quantity: number;
-  declare price: number;
+  declare variant_id: number;
+  declare total_price: number;
+  declare unit_price: number;
   declare order_id: number;
+  declare special_instructions: string;
 }
 
 export default (sequelize: Sequelize): typeof OrderItems => {
@@ -48,18 +54,32 @@ export default (sequelize: Sequelize): typeof OrderItems => {
         allowNull: false,
       },
 
+      variant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+
       quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
 
-      price: {
+      total_price: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+        defaultValue: 0,
+      },
+      unit_price: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
         defaultValue: 0,
       },
       order_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      special_instructions: {
+        type: DataTypes.TEXT("long"),
         allowNull: false,
       },
     },

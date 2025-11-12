@@ -65,10 +65,12 @@ export const removeFromCart = async (req: Request, res: Response, next: NextFunc
 export const clearCart = async (req: Request, res: Response, next: NextFunction) => {
   const { CartItems } = await connectDB();
   const { loc_id, table_id } = req.body;
+  console.log(req.body);
   try {
     await CartItems.destroy({ where: { loc_id, table_id } });
     return res.status(200).json({ success: true, message: "Cart cleared successfully" });
   } catch (e) {
+    console.error(e);
     next(e);
   }
 };
