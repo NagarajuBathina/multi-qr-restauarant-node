@@ -21,6 +21,7 @@ interface OrdersAttributes {
   status: string;
   cust_name: string; // customer name
   cust_phone: string; //customer phone number
+  payment_type: string;
   cancellation_reason: Text;
   cancellation_date_time?: Date;
   created_at?: Date;
@@ -50,6 +51,7 @@ export class Orders extends Model<OrdersAttributes, OrdersCreationAttributes> im
   declare internal_notes: Text;
   declare cust_name: string;
   declare cust_phone: string;
+  declare payment_type: string;
   declare cancellation_date_time?: Date;
   declare cancellation_reason: Text;
   // declare special_instructions: Text;
@@ -130,6 +132,10 @@ export default (sequelize: Sequelize): typeof Orders => {
       cust_phone: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      payment_type: {
+        type: DataTypes.ENUM("cash", "online"),
+        defaultValue: "cash",
       },
       // cart_id: {
       //   type: DataTypes.INTEGER,

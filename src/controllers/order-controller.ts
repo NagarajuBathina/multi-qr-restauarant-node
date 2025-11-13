@@ -109,12 +109,40 @@ export const fetchTodayOrders = async (req: Request, res: Response, next: NextFu
 };
 
 export const payBill = async (req: Request, res: Response, next: NextFunction) => {
-  const { Orders, RestaurantTable, OrderItems, MenuItems, sequelize } = await connectDB();
+  const { Orders, OrderItems, MenuItems, sequelize } = await connectDB();
   const transaction = await sequelize.transaction();
-  const { order_id, table_id, ...rest } = req.body;
+  const { order_id, ...rest } = req.body;
+
   try {
     const fetchOrder = await Orders.findOne({
       where: order_id,
+      // include: [
+      //   {
+      //     model: OrderItems,
+      //     attributes: ["item_id", "quantity", "total_price"],
+      //     include: [{ model: MenuItems, attributes: ["name"] }],
+      //   },
+      // ],
+    });
+    if (!fetchOrder) throw new AppError("Invalid order id", 400);
+
+    await fetchOrder.update({ ...rest }, { transaction });
+    // await RestaurantTable.update({ status: "available" }, { where: { table_id }, transaction });
+    await transaction.commit();
+    return res.status(200).json({ message: "Bill generated successfully", success: true });
+  } catch (e) {
+    if (transaction) await transaction.rollback();
+    console.error(e);
+    next(e);
+  }
+};
+
+export const fetchOrderDetails = async (req: Request, res: Response, next: NextFunction) => {
+  const { Orders, OrderItems, MenuItems } = await connectDB();
+  const { order_id } = req.params;
+  try {
+    const details = await Orders.findOne({
+      where: { order_id },
       include: [
         {
           model: OrderItems,
@@ -123,15 +151,32 @@ export const payBill = async (req: Request, res: Response, next: NextFunction) =
         },
       ],
     });
+    if (!details) throw new AppError("Invalid order id", 400);
+    return res.status(200).json({ success: true, data: details });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const confirmBill = async (req: Request, res: Response, next: NextFunction) => {
+  const { Orders, RestaurantTable, sequelize } = await connectDB();
+  const transaction = await sequelize.transaction();
+  const { order_id } = req.params;
+  const { status, payment_type } = req.body;
+
+  console.log(req.body);
+  try {
+    const fetchOrder = await Orders.findOne({
+      where: { order_id },
+    });
     if (!fetchOrder) throw new AppError("Invalid order id", 400);
 
-    const updatedData = await fetchOrder.update({ ...rest }, { transaction });
-    await RestaurantTable.update({ status: "available" }, { where: { table_id }, transaction });
+    await fetchOrder.update({ status, payment_type }, { transaction });
+    await RestaurantTable.update({ status: "available" }, { where: { table_id: fetchOrder.table_id }, transaction });
     await transaction.commit();
-    return res.status(200).json({ message: "Bill generated successfully", success: true, data: updatedData });
+    return res.status(200).json({ success: true });
   } catch (e) {
     if (transaction) await transaction.rollback();
-    console.error(e);
     next(e);
   }
 };
